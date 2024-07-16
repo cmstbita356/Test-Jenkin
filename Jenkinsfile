@@ -1,5 +1,8 @@
 pipeline{
     agent any
+    tools{
+        maven 'Maven3'
+    }
     environment {
         DOCKER_CREDENTIALS = 'creDocker' // ID của credentials đã lưu trong Jenkins
         DOCKER_IMAGE_NAME = 'bita356/image1' // Tên image
@@ -10,22 +13,18 @@ pipeline{
                 git branch: 'main', url: 'https://github.com/cmstbita356/Test-Jenkin'
             }
         }
-        stage('Build Docker Image') {
+        stage('Maven build') {
             steps {
-                script {
-                    // Xây dựng image
-                    def customImage = docker.build(DOCKER_IMAGE_NAME)
-                }
+                sh "mvn clean install"
             }
         }
-        stage('Push Docker Image') {
+        stage('Build Push Docker') {
             steps {
                 script {
-                    // Đăng nhập vào Docker Registry
-                    docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS) {
-                        // Đẩy image lên Docker Registry
-                        customImage.push('latest') // Thay đổi tag nếu cần
-                    }
+                    withDockerRegistry(credentialsId: 'creDocker') {
+                        sh "docker build -t bita356/image1:v1"
+                        sh "docker push -t bita356/image1:v1"
+                    }           
                 }
             }
         }
