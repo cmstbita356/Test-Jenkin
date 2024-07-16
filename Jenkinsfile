@@ -13,17 +13,17 @@ pipeline{
                 git branch: 'main', url: 'https://github.com/cmstbita356/Test-Jenkin'
             }
         }
-        stage('Maven build') {
-            steps {
-                sh "mvn clean install"
-            }
-        }
+        // stage('Maven build') {
+        //     steps {
+        //         sh "mvn clean install"
+        //     }
+        // }
         stage('Build Push Docker') {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'creDocker') {
-                        sh "docker build -t bita356/image1:v1 ."
-                        sh "docker push -t bita356/image1:v1"
+                        sh "docker build -t bita356/repo:v1 ."
+                        sh "docker push -t bita356/repo:v1"
                     }           
                 }
             }
