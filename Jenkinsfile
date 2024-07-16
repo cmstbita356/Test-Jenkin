@@ -22,7 +22,7 @@ pipeline{
             steps {
                 script {
                     // Đăng nhập vào Docker Registry
-                    docker.withRegistry(DOCKER_CREDENTIALS) {
+                    docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS) {
                         // Đẩy image lên Docker Registry
                         customImage.push('latest') // Thay đổi tag nếu cần
                     }
