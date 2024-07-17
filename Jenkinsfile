@@ -22,8 +22,8 @@ pipeline{
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'creDocker') {
-                        sh "docker build -t bita356/repo:v1 ."
-                        sh "docker push -t bita356/repo:v1"
+                        sh "docker build -t cmstbita356/image:tag1 ."
+                        sh "docker push -t cmstbita356/image:tag1"
                     }           
                 }
             }
