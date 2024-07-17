@@ -20,7 +20,7 @@ pipeline{
         // }
         stage('Build Push Docker') {
             steps {
-                script {
+                script{
                     withDockerRegistry(credentialsId: 'creDocker') {
                         sh "docker build -t cmstbita356/image:tag1 ."
                         sh "docker push -t cmstbita356/image:tag1"
